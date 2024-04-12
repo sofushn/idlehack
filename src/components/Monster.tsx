@@ -8,18 +8,23 @@ interface monsterProp{
     speed: number
     gold: number
 
+    onDie?:(coinValue: number) => void
+
     image: string
 }
 
 export function Monster(prop:monsterProp) {
+    const emptyFunc = (i: number) => {}
+    const onDie = prop.onDie ?? emptyFunc
+
     const [health, setHealth] = useState(prop.health_points);
-    
-    // this class needs an image representation 
 
     function loseHealth(playerDamage: number) {
       // health cannot go below zero
-      if (health > 0) {
+      if (health > 1) {
         setHealth(health - playerDamage);
+      } else {
+        die()
       }
     }
   
@@ -28,10 +33,7 @@ export function Monster(prop:monsterProp) {
     }
 
     function die() {
-      // not implemented
-      if (health <= 0) {
-        // drop cash ($)
-      }
+      onDie(prop.gold)
     }
     
     return (
