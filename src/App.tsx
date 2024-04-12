@@ -2,6 +2,7 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import {Monster} from './components/Monster';
+import slime from "./images/slime.png";
 
 function App() {
   return (
@@ -21,11 +22,13 @@ function App() {
         </a>
       </header>
       <Monster 
-        health_points={10} 
-        attack_power={5} 
-        defense={0} 
-        speed={2} 
-        gold={1}/>
+        health_points={10}
+        attack_power={5}
+        defense={0}
+        speed={2}
+        gold={1} 
+        image={slime}
+      />
     </div>
   );
 }
