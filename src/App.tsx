@@ -1,6 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import {Monster} from './components/Monster';
 
 function App() {
   return (
@@ -19,6 +20,12 @@ function App() {
           Learn React
         </a>
       </header>
+      <Monster 
+        health_points={10} 
+        attack_power={5} 
+        defense={0} 
+        speed={2} 
+        gold={1}/>
     </div>
   );
 }
