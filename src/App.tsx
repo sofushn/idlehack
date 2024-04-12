@@ -2,6 +2,7 @@ import './App.css';
 import { useState } from "react";
 import {Monster} from './components/Monster';
 import slime from "./images/slime.png";
+import Player from './components/Player';
 
 function App() {
   const [currentLevel, setCurrentLevel] = useState(1)
@@ -40,11 +41,20 @@ function App() {
   />)
 
   
+  
+  const [player, setplayer] = useState(<Player
+    maxHealth={10}
+    currentHealth={5}
+    />)
+
+  
   return (
     <div className="App">
       <h1>LEVEL: {currentLevel}</h1>
 
       {currentMonster}
+      {player}
+      
       
     </div>
   );
