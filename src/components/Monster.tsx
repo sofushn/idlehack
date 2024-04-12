@@ -9,7 +9,6 @@ interface monsterProp{
     gold: number
 
     onDie?: (coinValue: number) => void
-    onBeforeDie?: () => void
 
     image: string
 }
@@ -18,13 +17,16 @@ export function Monster(prop:monsterProp) {
   const emptyFunc = (i: number) => {}
   const emptyFunc2 = () => {} 
   const onDie = prop.onDie ?? emptyFunc
-  const onBeforeDie = prop.onBeforeDie ?? emptyFunc2
-  const 
 
   const [health, setHealth] = useState(prop.health_points);
+  const [isDead, setIsDead] = useState(false)
 
   function loseHealth(damage: number) {
     const newHealth = health - damage
+
+    if(newHealth < 1) {
+      setIsDead(true)
+    }
     setHealth(newHealth)
   }
 
@@ -32,10 +34,8 @@ export function Monster(prop:monsterProp) {
     // not implemented
   }
 
-  if (health < 1) {
-    onBeforeDie()
+  if (isDead) {
     onDie(prop.gold)
-    return <></>
   }
 
   return (
