@@ -25,7 +25,6 @@ function App() {
     // delete monster
     setCurrentMonster(nextMonster)
 
-
     // add gold to wallet
   }
 
