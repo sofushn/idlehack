@@ -1,0 +1,23 @@
+// See https://containers.dev/implementors/json_reference/ for configuration reference
+{
+	"name": "IdleHack - Development",
+	"build": {
+		"dockerfile": "Dockerfile"
+	},
+	"remoteUser": "node",
+	"workspaceMount": "source=${localWorkspaceFolder}/,target=/workspace,type=bind",
+	"workspaceFolder": "/workspace/",
+	"features": {
+		"ghcr.io/devcontainers/features/git:1": {}
+	},
+	"postCreateCommand": "cd /workspace && npm ci",
+	"forwardPorts": [ 3000 ],
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"dbaeumer.vscode-eslint",
+				"dsznajder.es7-react-js-snippets"
+			]
+		}
+	}
+}
