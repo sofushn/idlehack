@@ -36,6 +36,7 @@ export function Monster(prop:monsterProp) {
 
   if (isDead) {
     onDie(prop.gold)
+    return <></>
   }
 
   return (
