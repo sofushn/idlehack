@@ -2,7 +2,6 @@
 This is an idle game made by three friends during a hackathon.
 
 ## Todo
-
 - [ ] Player (controls, health)
 - [ ] Enemy (health, attack)
 - [ ] Art
@@ -20,3 +19,8 @@ This is an idle game made by three friends during a hackathon.
 - [ ] Talent tree, spells og resource(mana/rage/energy)  (se classes for inspiration. Og de kan så være måden man active og true idle game play)
 - [ ] Clickable (ligesom dem i clicker hero)
 - [ ] En shop der bruger clickable currency.
+
+## Technical requirements
+- vscode 
+- node.js v20.12
+- docker (docker desktop for windows)
