@@ -1,61 +1,48 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import { useState } from "react";
 import {Monster} from './components/Monster';
 import slime from "./images/slime.png";
 
 function App() {
-  const [counter, setCounter] = useState(1)
+  const [currentLevel, setCurrentLevel] = useState(1)
   function monsterDie(coinAmount: number) {
     console.log("ligma")
-    const nextLevel = counter + 1
+    const nextLevel = coinAmount + 1
     
-    // delete monster
-    setCurrentMonster(<Monster 
+    const nextMonster = <Monster 
       health_points={10 * nextLevel}
       attack_power={5}
       defense={0}
       speed={2}
-      gold={1} 
+      gold={nextLevel}
       image={slime}
       onDie={monsterDie}
       key={nextLevel}
-    />)
+  />
 
-    setCounter(nextLevel)
+    setCurrentLevel(nextLevel)
+    // delete monster
+    setCurrentMonster(nextMonster)
+
 
     // add gold to wallet
   }
 
   const [currentMonster, setCurrentMonster] = useState(<Monster 
-    health_points={10 * counter}
+    health_points={10 * currentLevel}
     attack_power={5}
     defense={0}
     speed={2}
     gold={1} 
     image={slime}
     onDie={monsterDie}
-    key={counter}
+    key={currentLevel}
   />)
 
   
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>LEVEL: {currentLevel}</h1>
 
       {currentMonster}
       
