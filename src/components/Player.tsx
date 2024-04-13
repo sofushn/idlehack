@@ -19,9 +19,6 @@ function Player(prop: player) {
         }
     }
 
-   
-
-
     return (
         <div onClick={() => heal(1)}>
             <p>player health: {currentHealth}</p>
