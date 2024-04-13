@@ -7,6 +7,8 @@ import PlayerComponent from './components/Player';
 import IDefensiveItems from './interfaces/IDefensiveItems';
 import ItemTypes from './enums/ItemTypes';
 import ItemRarity from './enums/ItemRarity';
+import IOffensiveItems from './interfaces/IOffensiveItems';
+
 
 
 function App() {
@@ -33,10 +35,22 @@ function App() {
 
     // add gold to wallet
   }
-  const [player, setplayer] = useState(new PlayerClass(10, 2))
+
+  const [helm] = useState({health:2,itemType:ItemTypes.Helm,rarity:ItemRarity.Common} as IDefensiveItems)
+  const [Chestplate] = useState({health:2,itemType:ItemTypes.Chestplate,rarity:ItemRarity.Common} as IDefensiveItems)
+  const [pants] = useState({health:2,itemType:ItemTypes.Pants,rarity:ItemRarity.Common} as IDefensiveItems)
+  const [gloves] = useState({health:2,itemType:ItemTypes.Gloves,rarity:ItemRarity.Common} as IDefensiveItems)
+  const [boots] = useState({health:2,itemType:ItemTypes.Boots,rarity:ItemRarity.Common} as IDefensiveItems)
+  const [ring1] = useState({attackPower:2,itemType:ItemTypes.Ring,rarity:ItemRarity.Common} as IOffensiveItems)
+  const [ring2] = useState({attackPower:2,itemType:ItemTypes.Ring,rarity:ItemRarity.Common} as IOffensiveItems)
+  const [neckless] = useState({attackPower:2,itemType:ItemTypes.Helm,rarity:ItemRarity.Common} as IOffensiveItems)
+  const [weapon] = useState({attackPower:4,itemType:ItemTypes.Helm,rarity:ItemRarity.Common} as IOffensiveItems)
+  const [offhand] = useState({attackPower:2,itemType:ItemTypes.Helm,rarity:ItemRarity.Common} as IOffensiveItems)
+
+  const [player, setplayer] = useState(new PlayerClass(10, 2, helm ,Chestplate ,pants ,gloves ,boots ,ring1 ,ring2 ,neckless ,weapon ,offhand))
 
   function playerAttack(): number {
-    return player.attackPower
+    return player.getAttackPower()
   }
 
 
@@ -59,7 +73,7 @@ function App() {
       <h1>LEVEL: {currentLevel}</h1>
 
       {currentMonster}
-      {player.attackPower}
+      {player.getAttackPower()}
 
 
 
