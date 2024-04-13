@@ -17,6 +17,8 @@ import shield_black from "../images/items/shield_black.png"
 import shield_red from "../images/items/shield_red.png"
 import dagger from "../images/items/dagger.png"
 import dagger_double from "../images/items/dagger_dobble.png"
+import IDefensiveItems from "../interfaces/IDefensiveItems";
+import IOffensiveItems from "../interfaces/IOffensiveItems";
 
 interface EnemyKilledEventArgs {
     xp: number
@@ -94,10 +96,13 @@ interface InventoryAreaProps {
 
 const InventoryArea = (props: InventoryAreaProps) => {
 
-    const itemFrames = props.items.map(item => (<div>
-        <img src={item.img}/>
-        {item.name}
-    </div>))    
+    const itemFrames = props.items.map(item => (
+        <div>
+            <img src={item.img} style={{height: "100px"}}/>
+            <p>{item.name}</p>
+            
+        </div>
+    ))    
     
     return (
         <div style={{backgroundColor: "lightcyan", gridArea: "inv", display: "flex", flexDirection: "row"}}>
@@ -115,12 +120,32 @@ export const Layout = () => {
     } as CSSProperties
 
     const [currentLevel, setCurrentLevel] = React.useState(1)
-    const [player, setplayer] = React.useState(new Player(10, 2))
+    
+    const [helm] = React.useState({health:2,itemType:ItemTypes.Helm,rarity:ItemRarity.Common} as IDefensiveItems)
+    const [Chestplate] = React.useState({health:2,itemType:ItemTypes.Chestplate,rarity:ItemRarity.Common} as IDefensiveItems)
+    const [pants] = React.useState({health:2,itemType:ItemTypes.Pants,rarity:ItemRarity.Common} as IDefensiveItems)
+    const [gloves] = React.useState({health:2,itemType:ItemTypes.Gloves,rarity:ItemRarity.Common} as IDefensiveItems)
+    const [boots_equip] = React.useState({health:2,itemType:ItemTypes.Boots,rarity:ItemRarity.Common} as IDefensiveItems)
+    const [ring1] = React.useState({attackPower:2,itemType:ItemTypes.Ring,rarity:ItemRarity.Common} as IOffensiveItems)
+    const [ring2] = React.useState({attackPower:2,itemType:ItemTypes.Ring,rarity:ItemRarity.Common} as IOffensiveItems)
+    const [neckless] = React.useState({attackPower:2,itemType:ItemTypes.Helm,rarity:ItemRarity.Common} as IOffensiveItems)
+    const [weapon] = React.useState({attackPower:4,itemType:ItemTypes.Helm,rarity:ItemRarity.Common} as IOffensiveItems)
+    const [offhand] = React.useState({attackPower:2,itemType:ItemTypes.Helm,rarity:ItemRarity.Common} as IOffensiveItems)
+  
+    const [player, setPlayer] = React.useState(new Player(10, 2, helm, Chestplate, pants, gloves, boots_equip, ring1, ring2, neckless, weapon, offhand))
 
-    player.bag = [{img:"", name:"Helmet", itemType: ItemTypes.Helm, rarity: ItemRarity.Epic}]
+
+    const bag = [
+        {img: helmet, name: "Helmet", itemType: ItemTypes.Helm, rarity: ItemRarity.Epic},
+        {img: boots, name: "Boots", itemType: ItemTypes.Boots, rarity: ItemRarity.Epic},
+        {img: dagger, name: "Dagger", itemType: ItemTypes.Weapon, rarity: ItemRarity.Rare},
+        {img: dagger_double, name: "Double Dagger", itemType: ItemTypes.Weapon, rarity: ItemRarity.Epic},
+        {img: shield_red, name: "Red Shield", itemType: ItemTypes.Offhand, rarity: ItemRarity.Epic},
+        {img: shield_black, name: "Black Shield", itemType: ItemTypes.Offhand, rarity: ItemRarity.Rare},
+    ]
 
     function playerAttack(): number {
-        return player.attackPower
+        return player.getAttackPower()
     }
 
     const enemyKilled = (args: EnemyKilledEventArgs) => {
@@ -138,6 +163,6 @@ export const Layout = () => {
         <EnemyArea level={currentLevel} onAttack={playerAttack} onEnemyKilled={(e) => enemyKilled(e)}/>
 
  
-        <InventoryArea items={[]}/>
+        <InventoryArea items={bag}/>
     </div>)
 }
