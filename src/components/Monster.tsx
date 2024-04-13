@@ -1,5 +1,5 @@
 import { ChildProcess } from "child_process";
-import { useState } from "react";
+import React, { useState } from "react";
 
 
 interface monsterProp {
@@ -31,6 +31,7 @@ export function Monster(prop: monsterProp) {
 
     if (newHealth < 1) {
       setIsDead(true)
+      onDie(prop.gold)
     }
     setHealth(newHealth)
   }
@@ -40,7 +41,6 @@ export function Monster(prop: monsterProp) {
   }
 
   if (isDead) {
-    onDie(prop.gold)
     return <></>
   }
 
