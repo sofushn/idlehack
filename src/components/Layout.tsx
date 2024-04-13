@@ -1,5 +1,10 @@
 import React, { CSSProperties } from "react";
 import { Monster } from "./Monster"
+import Player from "../classes/Player"
+import IItem from "../interfaces/IItems";
+import ItemRarity from "../enums/ItemRarity";
+import ItemTypes from "../enums/ItemTypes";
+
 import slime from "../images/monsters/slime.png"
 import croc from "../images/monsters/croc.png"
 import knifer from "../images/monsters/knifer.png"
@@ -7,9 +12,6 @@ import packi from "../images/monsters/packi.png"
 import root from "../images/monsters/root.png"
 
 
-interface player {
-    attackPower: number,
-} 
 
 interface EnemyKilledEventArgs {
     xp: number
@@ -81,8 +83,22 @@ const CharacterArea = () => {
 
 }
 
-const InventoryArea = () => {
+interface InventoryAreaProps {
+    items: Array<IItem>
+}
 
+const InventoryArea = (props: InventoryAreaProps) => {
+
+    const itemFrames = props.items.map(item => (<div>
+        <img src={item.img}/>
+        {item.name}
+    </div>))    
+    
+    return (
+        <div style={{display: "flex", flexDirection: "row"}}>
+            {itemFrames}
+        </div>
+    )
 }
 
 export const Layout = () => {
@@ -94,8 +110,9 @@ export const Layout = () => {
     } as CSSProperties
 
     const [currentLevel, setCurrentLevel] = React.useState(1)
-    const [player, setplayer] = React.useState({ attackPower: 2 } as player)
+    const [player, setplayer] = React.useState(new Player(10, 2))
 
+    player.bag = [{img:"", name:"Helmet", itemType: ItemTypes.Helm, rarity: ItemRarity.Epic}]
     const [counter, setCounter] = React.useState(0)
 
     function playerAttack(): number {
