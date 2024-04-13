@@ -2,11 +2,11 @@ import './App.css';
 import { useState } from "react";
 import { Monster } from './components/Monster';
 import slime from "./images/slime.png";
-import Player from './components/Player';
-
-interface player {
-  attackPower: number,
-}
+import PlayerClass from './classes/Player';
+import PlayerComponent from './components/Player';
+import IDefensiveItems from './interfaces/IDefensiveItems';
+import ItemTypes from './enums/ItemTypes';
+import ItemRarity from './enums/ItemRarity';
 
 
 function App() {
@@ -33,7 +33,7 @@ function App() {
 
     // add gold to wallet
   }
-  const [player, setplayer] = useState({ attackPower: 2 } as player)
+  const [player, setplayer] = useState(new PlayerClass(10, 2))
 
   function playerAttack(): number {
     return player.attackPower
@@ -52,12 +52,15 @@ function App() {
     key={currentLevel}
   />)
 
+
+
   return (
     <div className="App">
       <h1>LEVEL: {currentLevel}</h1>
 
       {currentMonster}
-      {/* {player} */}
+      {player.attackPower}
+
 
 
     </div>
