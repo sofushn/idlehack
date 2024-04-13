@@ -2,7 +2,7 @@ import React, { CSSProperties } from "react";
 import { Monster } from "./Monster"
 import Player from "../classes/Player"
 import { ItemRarity, ItemTypes } from "../types/enums";
-import { IItem, IDefensiveItems, IOffensiveItems, Equipment } from "../types/interfaces";
+import { IItem, Equipment, IOffensiveItems } from "../types/interfaces";
 
 import slime from "../images/monsters/slime.png"
 import croc from "../images/monsters/croc.png"
@@ -89,17 +89,42 @@ const CharacterArea = () => {
 
 interface InventoryAreaProps {
     items: Array<IItem>
+    onItemClick?: (item: IItem) => void
 }
 
 const InventoryArea = (props: InventoryAreaProps) => {
 
-    const itemFrames = props.items.map(item => (
-        <div>
-            <img src={item.img} style={{height: "100px"}}/>
-            <p>{item.name}</p>
+    const onClick = (item: IItem) => {
+        props.onItemClick?.(item)
+    }
+
+    const itemFrames = props.items.map(item => {
+        let itemColor = "#f7f7f7"
+        switch (item.rarity) {
+            case ItemRarity.Poor:
+                itemColor = "#aaaaaa"
+                break;
+            case ItemRarity.Uncommon:
+                itemColor = "#1eff00"
+                break;
+            case ItemRarity.Rare:
+                itemColor = "#006cd6"
+                break;
+            case ItemRarity.Epic:
+                itemColor = "#9e33e7"
+                break;
+            case ItemRarity.Legendary:
+                itemColor = "#f77c00"
+                break;
+        }
+
+        return (
+        <div style={{border: "2px solid", borderRadius: 5}} onClick={() => onClick(item)}>
+            <img src={item.img} style={{height: "100px"}} alt="Monster"/>
+            <p style={{backgroundColor: itemColor}}>{item.name}</p>
             
         </div>
-    ))    
+    )})
     
     return (
         <div style={{backgroundColor: "lightcyan", gridArea: "inv"}}>
@@ -122,23 +147,23 @@ export const Layout = () => {
     const [currentLevel, setCurrentLevel] = React.useState(1)
 
     const equipment = {
-        helm: { health:2, itemType: ItemTypes.Helm, rarity: ItemRarity.Common },
-        chestplate: { health: 2, itemType: ItemTypes.Chestplate, rarity: ItemRarity.Common },
-        pants: { health: 2, itemType: ItemTypes.Pants, rarity: ItemRarity.Common },
-        gloves: { health: 2, itemType: ItemTypes.Gloves, rarity: ItemRarity.Common },
-        boots: { health: 2, itemType: ItemTypes.Boots, rarity: ItemRarity.Common },
-        ring1: { attackPower: 2, itemType: ItemTypes.Ring, rarity: ItemRarity.Common },
-        ring2: {attackPower:2,itemType:ItemTypes.Ring, rarity: ItemRarity.Common },
-        neckless: {attackPower:2,itemType:ItemTypes.Helm,rarity:ItemRarity.Common},
-        weapon: {attackPower:4,itemType:ItemTypes.Helm,rarity:ItemRarity.Common},
-        offhand: {attackPower:2,itemType:ItemTypes.Helm,rarity:ItemRarity.Common}
+        helm: { health:2, itemType: ItemTypes.Helm, rarity: ItemRarity.Common, name: "Common helmet" },
+        chestplate: { health: 2, itemType: ItemTypes.Chestplate, rarity: ItemRarity.Common, name: "Common chestplate" },
+        pants: { health: 2, itemType: ItemTypes.Pants, rarity: ItemRarity.Common, name: "Common pants" },
+        gloves: { health: 2, itemType: ItemTypes.Gloves, rarity: ItemRarity.Common, name: "Common gloves" },
+        boots: { health: 2, itemType: ItemTypes.Boots, rarity: ItemRarity.Common, name: "Common boots" },
+        ring1: { attackPower: 2, itemType: ItemTypes.Ring, rarity: ItemRarity.Rare, name: "Rare ring" },
+        ring2: { attackPower: 2, itemType: ItemTypes.Ring, rarity: ItemRarity.Rare, name: "Rare ring" },
+        neckless: { attackPower: 2, itemType: ItemTypes.Neckless, rarity: ItemRarity.Rare, name: "Rare neckless" },
+        weapon: { attackPower: 4, itemType: ItemTypes.Weapon, rarity: ItemRarity.Common, name: "Common sword" },
+        offhand: { attackPower: 2, itemType: ItemTypes.Offhand, rarity: ItemRarity.Common, name: "Common sheild" }
     } as Equipment
 
     const bag = [
         {img: helmet, name: "Helmet", itemType: ItemTypes.Helm, rarity: ItemRarity.Epic},
         {img: boots, name: "Boots", itemType: ItemTypes.Boots, rarity: ItemRarity.Epic},
         {img: dagger, name: "Dagger", itemType: ItemTypes.Weapon, rarity: ItemRarity.Rare},
-        {img: dagger_double, name: "Double Dagger", itemType: ItemTypes.Weapon, rarity: ItemRarity.Epic},
+        {img: dagger_double, name: "Double Dagger", itemType: ItemTypes.Weapon, rarity: ItemRarity.Epic, attackPower: 200 } as IOffensiveItems,
         {img: shield_red, name: "Red Shield", itemType: ItemTypes.Offhand, rarity: ItemRarity.Epic},
         {img: shield_black, name: "Black Shield", itemType: ItemTypes.Offhand, rarity: ItemRarity.Rare},
     ]
@@ -153,6 +178,11 @@ export const Layout = () => {
         setCurrentLevel(currentLevel + args.xp)
     }
 
+    const equipItem = (item: IItem) => {
+        player.equipItem(item)
+        setPlayer(player)
+    }
+
     return (
     <div className="window" style={gridStyle}>
         
@@ -164,6 +194,6 @@ export const Layout = () => {
         <EnemyArea level={currentLevel} onAttack={playerAttack} onEnemyKilled={(e) => enemyKilled(e)}/>
 
  
-        <InventoryArea items={bag}/>
+        <InventoryArea items={player.bag.map(i => i)} onItemClick={equipItem}/>
     </div>)
 }
