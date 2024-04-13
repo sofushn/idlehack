@@ -1,6 +1,11 @@
 import React, { CSSProperties } from "react";
 import { Monster } from "./Monster"
-import slime from "../images/slime.png";
+import slime from "../images/monsters/slime.png"
+import croc from "../images/monsters/croc.png"
+import knifer from "../images/monsters/knifer.png"
+import packi from "../images/monsters/packi.png"
+import root from "../images/monsters/root.png"
+
 
 interface player {
     attackPower: number,
@@ -18,6 +23,14 @@ interface EnemyAreaProps {
 }
 
 const EnemyArea = (props: EnemyAreaProps) => {    
+    const monsters = [
+        croc,
+        slime,
+        knifer,
+        packi,
+        root
+    ]
+    
     function onMonsterDie(coinAmount: number) {
         const nextLevel = coinAmount + 1
     
@@ -29,18 +42,20 @@ const EnemyArea = (props: EnemyAreaProps) => {
         props.onEnemyKilled?.({xp: coinAmount} as EnemyKilledEventArgs)
 
         // replace monster
+        const monsterIndex = Math.floor(Math.random() * monsters.length)
         setCurrentMonster(<Monster 
             health_points={10 * nextLevel}
             attack_power={5}
             defense={0}
             speed={2}
             gold={nextLevel}
-            image={slime}
+            image={monsters[monsterIndex]}
             onDie={onMonsterDie}
             onTakeDamage={props.onAttack}
             key={Math.floor(Math.random() * 1000000)}
         />)
     }
+    
     
 
     const [currentMonster, setCurrentMonster] = React.useState(<Monster 
@@ -49,7 +64,7 @@ const EnemyArea = (props: EnemyAreaProps) => {
         defense={0}
         speed={2}
         gold={1} 
-        image={slime}
+        image={monsters[Math.floor(Math.random() * monsters.length)]}
         onDie={onMonsterDie}
         onTakeDamage={props.onAttack}
         key={Math.floor(Math.random() * 1000000)}

@@ -1,4 +1,3 @@
-import { ChildProcess } from "child_process";
 import React, { useState } from "react";
 
 
@@ -46,7 +45,7 @@ export function Monster(prop: monsterProp) {
 
   return (
     <div onClick={loseHealth}>
-      <img src={prop.image} alt="Monster" />
+      <img src={prop.image} alt="Monster" style={{maxHeight: "30vh"}} />
       <p>Health: {health}</p>
     </div>
   );
