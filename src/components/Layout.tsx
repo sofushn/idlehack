@@ -26,7 +26,7 @@ const EnemyArea = (props: EnemyAreaProps) => {
         // generate xp
 
 
-        props.onEnemyKilled?.({xp: 10} as EnemyKilledEventArgs)
+        props.onEnemyKilled?.({xp: coinAmount} as EnemyKilledEventArgs)
 
         // replace monster
         setCurrentMonster(<Monster 
@@ -40,8 +40,7 @@ const EnemyArea = (props: EnemyAreaProps) => {
             onTakeDamage={props.onAttack}
             key={Math.floor(Math.random() * 1000000)}
         />)
-      }
-    
+    }
     
 
     const [currentMonster, setCurrentMonster] = React.useState(<Monster 
@@ -82,19 +81,26 @@ export const Layout = () => {
     const [currentLevel, setCurrentLevel] = React.useState(1)
     const [player, setplayer] = React.useState({ attackPower: 2 } as player)
 
+    const [counter, setCounter] = React.useState(0)
+
     function playerAttack(): number {
         return player.attackPower
+    }
+
+    const enemyKilled = (args: EnemyKilledEventArgs) => {
+        setCurrentLevel(currentLevel + args.xp)
     }
 
     return (
     <div className="window" style={gridStyle}>
         
+        <h1>{counter}</h1>
         <h1 style={{gridArea: "header"}}>LEVEL: {currentLevel}</h1>
 
-        <div className="charachter" style={{backgroundColor: "lightcoral", gridArea: "char"}}>
+        <div className="charachter" style={{backgroundColor: "lightcoral", gridArea: "char"}} onClick={() => setCounter(counter + 1)}>
 
         </div>
-        <EnemyArea level={currentLevel} onAttack={playerAttack}/>
+        <EnemyArea level={currentLevel} onAttack={playerAttack} onEnemyKilled={(e) => enemyKilled(e)}/>
 
  
         
