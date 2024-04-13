@@ -1,46 +1,45 @@
 import { Equipment, IItem } from "../types/interfaces";
 
-class Player implements IPlayer {
-    maxHealth: number;
-    currentHealth: number;
-    attackPower: number;
-    bag: IItem[] = [];
-    Helm!: IDefensiveItems;
-    Chestplate!: IDefensiveItems;
-    Pants!: IDefensiveItems;
-    Gloves!: IDefensiveItems;
-    Boots!: IDefensiveItems;
-    Ring1!: IOffensiveItems;
-    Ring2!: IOffensiveItems;
-    Neckless!: IOffensiveItems;
-    Weapon!: IOffensiveItems;
-    Offhand!: IOffensiveItems;
+class Player {
+    maxHealth: number
+    currentHealth: number
+    attackPower: number
+    bag: IItem[]
+    equipment: Equipment
 
-
-    public constructor(maxHealth: number, attackPower: number, Helm: IDefensiveItems, Chestplate: IDefensiveItems, Pants: IDefensiveItems, Gloves: IDefensiveItems, Boots: IDefensiveItems, Ring1: IOffensiveItems, Ring2: IOffensiveItems, Neckless: IOffensiveItems, Weapon: IOffensiveItems, Offhand: IOffensiveItems) {
+    public constructor(maxHealth: number, attackPower: number, equipment: Equipment = {}, bag: Array<IItem> = []) {
         this.maxHealth = maxHealth
         this.currentHealth = maxHealth
         this.attackPower = attackPower
-        this.Helm = Helm;
-        this.Chestplate = Chestplate;
-        this.Pants = Pants;
-        this.Gloves = Gloves;
-        this.Boots = Boots;
-        this.Ring1 = Ring1;
-        this.Ring2 = Ring2;
-        this.Neckless = Neckless;
-        this.Weapon = Weapon;
-        this.Offhand = Offhand;
+        this.equipment = equipment
+        this.bag = bag
     }
 
     public getAttackPower() {
+        const ring1AP = this.equipment.ring1?.attackPower ?? 0
+        const ring2AP = this.equipment.ring2?.attackPower ?? 0
+        const necklessAP = this.equipment.neckless?.attackPower ?? 0
+        const weaponAP = this.equipment.weapon?.attackPower ?? 0
+        const offhandAP = this.equipment.offhand?.attackPower ?? 0
 
-        const realAttackPower = this.attackPower + this.Ring1.attackPower + this.Ring2.attackPower + this.Neckless.attackPower + this.Weapon.attackPower + this.Offhand.attackPower
+        const bonusAP = ring1AP + ring2AP + necklessAP + weaponAP + offhandAP
+
+        const realAttackPower = this.attackPower + bonusAP
+            
         return realAttackPower;
     }
 
     public getMaxHealth() {
-        const realMaxHealth = this.maxHealth + this.Helm.health + this.Chestplate.health + this.Pants.health + this.Gloves.health + this.Boots.health;
+        const helmetHealth = this.equipment.helm?.health ?? 0
+        const chestHealth = this.equipment.chestplate?.health ?? 0
+        const pantsHealth = this.equipment.pants?.health ?? 0
+        const glovesHealth = this.equipment.gloves?.health ?? 0
+        const bootsHealth = this.equipment.boots?.health ?? 0
+
+        const bonusHealth = helmetHealth + chestHealth + pantsHealth + glovesHealth + bootsHealth
+
+        const realMaxHealth = this.maxHealth + bonusHealth;
+        return realMaxHealth
     }
 
 
