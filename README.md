@@ -4,7 +4,7 @@ This is an idle game made by three friends during a hackathon.
 ## Todo
 - [ ] Player 
     - [ ] Controls 
-    - [ ] Health
+    - [x] Health
     - [ ] Inventory
 - [ ] Enemy 
     - [ ] Health

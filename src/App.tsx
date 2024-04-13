@@ -1,16 +1,21 @@
 import './App.css';
 import { useState } from "react";
-import {Monster} from './components/Monster';
+import { Monster } from './components/Monster';
 import slime from "./images/slime.png";
 import Player from './components/Player';
+
+interface player {
+  attackPower: number,
+}
+
 
 function App() {
   const [currentLevel, setCurrentLevel] = useState(1)
   function monsterDie(coinAmount: number) {
     console.log("ligma")
     const nextLevel = coinAmount + 1
-    
-    const nextMonster = <Monster 
+
+    const nextMonster = <Monster
       health_points={10 * nextLevel}
       attack_power={5}
       defense={0}
@@ -18,8 +23,9 @@ function App() {
       gold={nextLevel}
       image={slime}
       onDie={monsterDie}
+      onTakeDamage={playerAttack}
       key={nextLevel}
-  />
+    />
 
     setCurrentLevel(nextLevel)
     // delete monster
@@ -27,34 +33,33 @@ function App() {
 
     // add gold to wallet
   }
+  const [player, setplayer] = useState({ attackPower: 2 } as player)
 
-  const [currentMonster, setCurrentMonster] = useState(<Monster 
+  function playerAttack(): number {
+    return player.attackPower
+  }
+
+
+  const [currentMonster, setCurrentMonster] = useState(<Monster
     health_points={10 * currentLevel}
     attack_power={5}
     defense={0}
     speed={2}
-    gold={1} 
+    gold={1}
     image={slime}
     onDie={monsterDie}
+    onTakeDamage={playerAttack}
     key={currentLevel}
   />)
 
-  
-  
-  const [player, setplayer] = useState(<Player
-    maxHealth={10}
-    currentHealth={5}
-    />)
-
-  
   return (
     <div className="App">
       <h1>LEVEL: {currentLevel}</h1>
 
       {currentMonster}
-      {player}
-      
-      
+      {/* {player} */}
+
+
     </div>
   );
 }
