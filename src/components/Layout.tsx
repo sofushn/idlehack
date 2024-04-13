@@ -11,7 +11,12 @@ import knifer from "../images/monsters/knifer.png"
 import packi from "../images/monsters/packi.png"
 import root from "../images/monsters/root.png"
 
-
+import helmet from "../images/items/helmet.png"
+import boots from "../images/items/boots.png"
+import shield_black from "../images/items/shield_black.png"
+import shield_red from "../images/items/shield_red.png"
+import dagger from "../images/items/dagger.png"
+import dagger_double from "../images/items/dagger_dobble.png"
 
 interface EnemyKilledEventArgs {
     xp: number
@@ -95,7 +100,7 @@ const InventoryArea = (props: InventoryAreaProps) => {
     </div>))    
     
     return (
-        <div style={{display: "flex", flexDirection: "row"}}>
+        <div style={{backgroundColor: "lightcyan", gridArea: "inv", display: "flex", flexDirection: "row"}}>
             {itemFrames}
         </div>
     )
@@ -113,7 +118,6 @@ export const Layout = () => {
     const [player, setplayer] = React.useState(new Player(10, 2))
 
     player.bag = [{img:"", name:"Helmet", itemType: ItemTypes.Helm, rarity: ItemRarity.Epic}]
-    const [counter, setCounter] = React.useState(0)
 
     function playerAttack(): number {
         return player.attackPower
@@ -126,19 +130,14 @@ export const Layout = () => {
     return (
     <div className="window" style={gridStyle}>
         
-        <h1>{counter}</h1>
         <h1 style={{gridArea: "header"}}>LEVEL: {currentLevel}</h1>
 
-        <div className="charachter" style={{backgroundColor: "lightcoral", gridArea: "char"}} onClick={() => setCounter(counter + 1)}>
+        <div className="charachter" style={{backgroundColor: "lightcoral", gridArea: "char"}}>
 
         </div>
         <EnemyArea level={currentLevel} onAttack={playerAttack} onEnemyKilled={(e) => enemyKilled(e)}/>
 
  
-        
-
-        <div style={{backgroundColor: "lightcyan", gridArea: "inv"}}>
-
-        </div>
+        <InventoryArea items={[]}/>
     </div>)
 }
