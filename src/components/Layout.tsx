@@ -120,20 +120,19 @@ export const Layout = () => {
     } as CSSProperties
 
     const [currentLevel, setCurrentLevel] = React.useState(1)
-    
-    const [helm] = React.useState({health:2,itemType:ItemTypes.Helm,rarity:ItemRarity.Common} as IDefensiveItems)
-    const [Chestplate] = React.useState({health:2,itemType:ItemTypes.Chestplate,rarity:ItemRarity.Common} as IDefensiveItems)
-    const [pants] = React.useState({health:2,itemType:ItemTypes.Pants,rarity:ItemRarity.Common} as IDefensiveItems)
-    const [gloves] = React.useState({health:2,itemType:ItemTypes.Gloves,rarity:ItemRarity.Common} as IDefensiveItems)
-    const [boots_equip] = React.useState({health:2,itemType:ItemTypes.Boots,rarity:ItemRarity.Common} as IDefensiveItems)
-    const [ring1] = React.useState({attackPower:2,itemType:ItemTypes.Ring,rarity:ItemRarity.Common} as IOffensiveItems)
-    const [ring2] = React.useState({attackPower:2,itemType:ItemTypes.Ring,rarity:ItemRarity.Common} as IOffensiveItems)
-    const [neckless] = React.useState({attackPower:2,itemType:ItemTypes.Helm,rarity:ItemRarity.Common} as IOffensiveItems)
-    const [weapon] = React.useState({attackPower:4,itemType:ItemTypes.Helm,rarity:ItemRarity.Common} as IOffensiveItems)
-    const [offhand] = React.useState({attackPower:2,itemType:ItemTypes.Helm,rarity:ItemRarity.Common} as IOffensiveItems)
-  
-    const [player, setPlayer] = React.useState(new Player(10, 2, helm, Chestplate, pants, gloves, boots_equip, ring1, ring2, neckless, weapon, offhand))
 
+    const equipment = {
+        helm: { health:2, itemType: ItemTypes.Helm, rarity: ItemRarity.Common },
+        chestplate: { health: 2, itemType: ItemTypes.Chestplate, rarity: ItemRarity.Common },
+        pants: { health: 2, itemType: ItemTypes.Pants, rarity: ItemRarity.Common },
+        gloves: { health: 2, itemType: ItemTypes.Gloves, rarity: ItemRarity.Common },
+        boots: { health: 2, itemType: ItemTypes.Boots, rarity: ItemRarity.Common },
+        ring1: { attackPower: 2, itemType: ItemTypes.Ring, rarity: ItemRarity.Common },
+        ring2: {attackPower:2,itemType:ItemTypes.Ring, rarity: ItemRarity.Common },
+        neckless: {attackPower:2,itemType:ItemTypes.Helm,rarity:ItemRarity.Common},
+        weapon: {attackPower:4,itemType:ItemTypes.Helm,rarity:ItemRarity.Common},
+        offhand: {attackPower:2,itemType:ItemTypes.Helm,rarity:ItemRarity.Common}
+    } as Equipment
 
     const bag = [
         {img: helmet, name: "Helmet", itemType: ItemTypes.Helm, rarity: ItemRarity.Epic},
@@ -143,6 +142,8 @@ export const Layout = () => {
         {img: shield_red, name: "Red Shield", itemType: ItemTypes.Offhand, rarity: ItemRarity.Epic},
         {img: shield_black, name: "Black Shield", itemType: ItemTypes.Offhand, rarity: ItemRarity.Rare},
     ]
+
+    const [player, setPlayer] = React.useState(new Player(10, 2, equipment, bag))
 
     function playerAttack(): number {
         return player.getAttackPower()
