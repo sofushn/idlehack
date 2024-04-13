@@ -1,8 +1,4 @@
-import { off } from "process";
-import IDefensiveItems from "../interfaces/IDefensiveItems";
-import IItem from "../interfaces/IItems";
-import IOffensiveItems from "../interfaces/IOffensiveItems";
-import IPlayer from "../interfaces/IPlayer";
+import { Equipment, IItem } from "../types/interfaces";
 
 class Player implements IPlayer {
     maxHealth: number;

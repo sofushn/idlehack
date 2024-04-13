@@ -1,9 +1,8 @@
 import React, { CSSProperties } from "react";
 import { Monster } from "./Monster"
 import Player from "../classes/Player"
-import IItem from "../interfaces/IItems";
-import ItemRarity from "../enums/ItemRarity";
-import ItemTypes from "../enums/ItemTypes";
+import { ItemRarity, ItemTypes } from "../types/enums";
+import { IItem, IDefensiveItems, IOffensiveItems, Equipment } from "../types/interfaces";
 
 import slime from "../images/monsters/slime.png"
 import croc from "../images/monsters/croc.png"
@@ -17,8 +16,6 @@ import shield_black from "../images/items/shield_black.png"
 import shield_red from "../images/items/shield_red.png"
 import dagger from "../images/items/dagger.png"
 import dagger_double from "../images/items/dagger_dobble.png"
-import IDefensiveItems from "../interfaces/IDefensiveItems";
-import IOffensiveItems from "../interfaces/IOffensiveItems";
 
 interface EnemyKilledEventArgs {
     xp: number
@@ -105,8 +102,11 @@ const InventoryArea = (props: InventoryAreaProps) => {
     ))    
     
     return (
-        <div style={{backgroundColor: "lightcyan", gridArea: "inv", display: "flex", flexDirection: "row"}}>
-            {itemFrames}
+        <div style={{backgroundColor: "lightcyan", gridArea: "inv"}}>
+            <div style={{display: "flex", flexDirection: "row", flexWrap: "wrap", gap: "1vh"}}>
+                {itemFrames}
+            </div>
+            
         </div>
     )
 }
